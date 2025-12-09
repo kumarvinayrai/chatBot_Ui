@@ -1,48 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="NeoRoTech AI Chatbot – Interact with our virtual assistant to manage account queries and FAQs.">
-<title>NeoRoTech Chatbot</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Bootstrap 5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>NeoRoTech AI Chatbot | Enterprise GenAI & Digital Solutions</title>
+
+<meta name="description" content="Chat with NeoRoTech's AI Virtual Assistant for inquiries regarding enterprise software development, GenAI solutions, digital transformation, and corporate training." />
+<meta name="keywords" content="NeoRoTech, AI chatbot, GenAI Solutions, Software Development, Digital Transformation, Corporate Training" />
+<meta name="author" content="NeoRoTech" />
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <!-- Custom CSS -->
-  <link href="style.css" rel="stylesheet">
-<style>
-.chatbot-close {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-}
-</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+<!-- Custom Styles -->
+<link href="style.css" rel="stylesheet" />
+ 
 </head>
 <body>
 
-<!-- Floating Chat Icon -->
-<div class="chat-toggle" aria-label="Open Chatbot"><i class="fa-solid fa-robot"></i></div>
+<!-- Chat Icon -->
+<button class="chat-toggle" aria-label="Open Chatbot">
+  <i class="fa-solid fa-robot"></i>
+</button>
 
 <!-- Chatbot Window -->
-<aside class="chatbot-window" aria-label="NeoRoTech AI Chatbot" role="complementary">
-  <header class="chatbot-header">
-    <h5 class="chatbot-title"><i class="fa-solid fa-robot"></i> NeoRoTech bot</h5>
-    <button class="chatbot-close" aria-label="Close Chat"><i class="fa-solid fa-xmark"></i></button>
+<aside class="chatbot-window shadow-lg bg-white position-fixed bottom-0 end-0" aria-label="NeoRoTech AI Chatbot" role="dialog">
+  
+  <header class="chatbot-header bg-primary text-white">
+    <h2 class="h6 mb-0">
+      <i class="fa-solid fa-robot"></i> NeoRoTech Bot
+    </h2>
+    <button class="chatbot-close btn btn-sm text-white" aria-label="Close Chat">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </header>
 
-  <div class="chatbot-messages" aria-live="polite"></div>
+  <div class="chatbot-messages" aria-live="polite">
+    
+    <div class="chat-row bot-message">
+      <div class="chat-bubble">
+        Welcome to NeoRoTech! We deliver enterprise-grade software, cloud-native architectures & GenAI innovation.
+        <div class="small text-muted mt-1 text-end">09:26 PM</div>
+      </div>
+    </div>
 
-  <form class="chatbot-input" role="form" aria-label="Send message">
-    <input type="text" placeholder="Type your message..." aria-label="Type a message">
-    <button type="submit" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button>
+    <div class="chat-row bot-message">
+      <div class="chat-bubble">
+        How can we assist you today?
+        <div class="small text-muted mt-1 text-end">09:26 PM</div>
+      </div>
+    </div>
+
+    <div class="chat-suggestions">
+      <button type="button" class="btn btn-outline-primary" data-value="Software Development Services">Software Development Services</button>
+      <button type="button" class="btn btn-outline-primary" data-value="GenAI Solutions">GenAI Solutions</button>
+      <button type="button" class="btn btn-outline-primary" data-value="Corporate Training Programs">Corporate Training Programs</button>
+      <button type="button" class="btn btn-outline-primary" data-value="Digital Transformation Consulting">Digital Transformation Consulting</button>
+      <button type="button" class="btn btn-outline-primary" data-value="Other Inquiries">Other Inquiries</button>
+    </div>
+
+  </div>
+
+  <form class="chatbot-input" role="form">
+    <input type="text" placeholder="Type your message..." aria-label="Type a message" required>
+    <button type="submit" class="btn btn-primary" aria-label="Send message">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
   </form>
+
 </aside>
 
 <script>
+// UI elements
 const chatToggle = document.querySelector('.chat-toggle');
 const chatWindow = document.querySelector('.chatbot-window');
 const closeBtn = document.querySelector('.chatbot-close');
@@ -50,40 +82,53 @@ const messages = document.querySelector('.chatbot-messages');
 const form = document.querySelector('.chatbot-input');
 const input = form.querySelector('input');
 
-// Open chatbot on click
+// Auto Suggestion Buttons
+document.querySelectorAll('[data-value]').forEach(button => {
+  button.addEventListener('click', () => {
+    input.value = button.getAttribute("data-value");
+    input.focus();
+  });
+});
+
+// Show Chat
 chatToggle.addEventListener('click', () => {
   chatWindow.style.display = 'flex';
   chatToggle.style.display = 'none';
-  input.focus();
 });
 
-// Close chatbot
+// Hide Chat
 closeBtn.addEventListener('click', () => {
   chatWindow.style.display = 'none';
   chatToggle.style.display = 'flex';
 });
 
-// Send message
+// Messaging Logic
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  if(input.value.trim() === '') return;
+  if(!input.value.trim()) return;
 
-  const userRow = document.createElement('div');
-  userRow.className = 'chat-row user-message';
-  userRow.innerHTML = `<div class="chat-avatar"><i class="fa-solid fa-user"></i></div><div class="chat-bubble">${input.value}</div>`;
-  messages.appendChild(userRow);
+  const userMsg = `
+    <div class="chat-row user-message">
+      <div class="chat-bubble">${input.value}</div>
+    </div>`;
+
+  messages.insertAdjacentHTML('beforeend', userMsg);
   messages.scrollTop = messages.scrollHeight;
 
+  const userText = input.value;
   input.value = '';
 
   setTimeout(() => {
-    const botRow = document.createElement('div');
-    botRow.className = 'chat-row bot-message';
-    botRow.innerHTML = `<div class="chat-bubble">Thanks for your message! How can I assist further?</div><div class="chat-avatar"><i class="fa-solid fa-robot"></i></div>`;
-    messages.appendChild(botRow);
+    const botMsg = `
+      <div class="chat-row bot-message">
+        <div class="chat-bubble">Thank you! We will guide you further on <strong>${userText}</strong>.</div>
+      </div>`;
+    
+    messages.insertAdjacentHTML('beforeend', botMsg);
     messages.scrollTop = messages.scrollHeight;
-  }, 800);
+  }, 700);
 });
+
 </script>
 
 </body>
