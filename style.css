@@ -77,8 +77,8 @@
     --border-strong: rgba(255,255,255,0.06);
     --sidebar-top: #16355f;
     --sidebar-bottom: #0f2546;
-    --bg-chat-user: rgba(58,122,255,0.06);
-    --bg-chat-bot: rgba(22,163,74,0.06);
+    --bg-chat-user: #e9f0ff;
+    --bg-chat-bot: #d1ffe4;
   }
 }
 
@@ -184,7 +184,8 @@ img { max-width: 100%; display: block; }
   display: inline-flex; align-items: center; gap: .5rem;
   padding: .5rem .75rem;
   border-radius: 10px; border: 1px solid transparent;
-  background: var(--card-bg); color: inherit;
+  /* background: var(--card-bg); */
+  color: inherit; 
   cursor: pointer;
   transition: box-shadow var(--fast) var(--ease), transform var(--fast) var(--ease), background var(--fast) var(--ease);
 }
@@ -264,8 +265,13 @@ img { max-width: 100%; display: block; }
   max-width: 75%;
   padding: .55rem .85rem;
   border-radius: var(--radius-sm);
+  background: var(--bg-chat-bot);
   font-size: 0.9rem;
   box-shadow: var(--shadow-1);
+}
+.user-message .chat-bubble {
+    background: var(--bg-chat-user);
+    text-align: right;
 }
 .chat-user { background: var(--bg-chat-user); color: var(--accent); }
 .chat-bot { background: var(--bg-chat-bot); color: var(--success); }
